@@ -70,7 +70,7 @@ public class Sudoku {
 	      
 	    boolean result = true;
 	      if(grid.length==9 && isValid(grid)==true){
-	        for(int i=0;i<b.length;i++){
+	        for(int i=0;i<grid.length;i++){
 	          if(uniqueEntries(grid[i])==false){
 	            
 	        	  result = false;
@@ -146,13 +146,13 @@ public class Sudoku {
 	   return b;
 	  }
 	  // takes a 2d array representing the grid and returns the specified column from the grid. 
-	  public static int[] getColumn(int[][] grid, int column){
+	  public static int[] getColumn(int[][] grid, int colIndex){
 	    
 	    int a = 0;
 	    int[] column = new int[9];
 	    for(int row = 0; row<grid.length;row++){
 	      
-	      column[a] = grid[row][column];
+	      column[a] = grid[row][colIndex];
 	      a++;
 	    }
 	    return column; 
