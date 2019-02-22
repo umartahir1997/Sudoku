@@ -7,7 +7,7 @@ public class Sudoku {
 	    //int[] b = sort(a);
 	    //System.out.println(Arrays.toString(b));  
 	    
-	    int[][] p = {{5,3,4,6,7,8,9,1,2},{6,7,2,1,9,5,3,4,8},{1,9,8,3,4,2,5,6,7},{8,5,9,7,6,1,4,2,3},{4,2,6,8,5,3,7,9,1},{7,1,3,9,2,4,8,5,6},{9,6,1,5,3,7,2,8,4},{2,8,7,4,1,9,6,3,5},{3,4,5,2,8,6,1,7,9}};
+	    int[][] GRID = {{5,3,4,6,7,8,9,1,2},{6,7,2,1,9,5,3,4,8},{1,9,8,3,4,2,5,6,7},{8,5,9,7,6,1,4,2,3},{4,2,6,8,5,3,7,9,1},{7,1,3,9,2,4,8,5,6},{9,6,1,5,3,7,2,8,4},{2,8,7,4,1,9,6,3,5},{3,4,5,2,8,6,1,7,9}};
 	    
 	    //System.out.println(uniqueEntries(p[8]));
 	    //System.out.println(Arrays.toString(getColumn(p,0)));
@@ -22,7 +22,7 @@ public class Sudoku {
 	    //System.out.println(isSubgrid(p));
 	    //System.out.println(uniqueEntries(flatten(subGrid(p,0,0,3))));  // test methods for each of the individual helper methods.
 	    //System.out.println(isSudoku(p));
-	    if(isSudoku(p)){
+	    if(isSudoku(GRID)){
 	    	System.out.println("Game over!");
 	    	
 	    }
@@ -35,88 +35,88 @@ public class Sudoku {
 	    long totalTime = endTime - startTime;
 	    System.out.println(totalTime);
 	  }
-	
-	  public static boolean isSudoku(int[][] b){
+	  // by calling new helper methods that we have created(isRow,isColumn,isSubgrid) , isSudoku returns true if and only if all helper methods return true.
+	  public static boolean isSudoku(int[][] grid){
 	    
-            boolean result1 = false;
-	    if(b.length==9 && isValid(b)==true){
-	      if(isRow(b)==true && isColumn(b)==true && isSubgrid(b)==true){  // by calling new helper methods that we have created(isRow,isColumn,isSubgrid) , isSudoku returns true if and only if all helper methods return true. 
+            boolean result = false;
+	    if(grid.length==9 && isValid(grid)==true){
+	      if(isRow(grid)==true && isColumn(grid)==true && isSubgrid(grid)==true){   
 	        
-	    	  result1 = true;
+	    	  result = true;
 	      }
 	      else{
 	        
-	    	  result1 = false;
+	    	  result = false;
 	      }
 	    }
-	   return result1;
+	   return result;
 	  }
 	  
-	  public static boolean isColumn(int[][] b){  //checks if each column contains unique entries.
+	  public static boolean isColumn(int[][] grid){  //checks if each column contains unique entries.
 	    
-            boolean result2 = true;
-	    if(b.length==9 && isValid(b)==true){
-	      for(int i=0;i<b[0].length;i++){
-	          if(uniqueEntries(getColumn(b,i))==false){   // checks if each row contains unique no.s.
+            boolean result = true;
+	    if(grid.length==9 && isValid(grid)==true){
+	      for(int i=0;i<grid[0].length;i++){
+	          if(uniqueEntries(getColumn(grid,i))==false){   // checks if each row contains unique no.s.
 	            
-	        	  result2 = false;
+	        	  result = false;
 	          
 	          }
 	      }
 	    }
-	   return result2;   
+	   return result;   
 	  } 
-	  public static boolean isRow(int[][] b){  //checks if each row contains unique entries.
+	  public static boolean isRow(int[][] grid){  //checks if each row contains unique entries.
 	      
-	    boolean result3 = true;
-	      if(b.length==9 && isValid(b)==true){
+	    boolean result = true;
+	      if(grid.length==9 && isValid(grid)==true){
 	        for(int i=0;i<b.length;i++){
-	          if(uniqueEntries(b[i])==false){
+	          if(uniqueEntries(grid[i])==false){
 	            
-	        	  result3 = false;
+	        	  result = false;
 	          }
 	        }
 	      }
-	     return result3;
+	     return result;
 	    }
-	    public static boolean isSubgrid(int[][] b){
+	    public static boolean isSubgrid(int[][] grid){
 	      
-	    boolean result4 = true;
+	    boolean result = true;
 	      for(int w=0;w<3;w++){    //row no is fixed for subgrids at top.
-	        if(uniqueEntries(flatten(subGrid(b,0,3*w,3)))==false){ // 3 "if" conditions to check entries for each of the 3 subgrids in rows 0,3,6,
+	        if(uniqueEntries(flatten(subGrid(grid,0,3*w,3)))==false){ // 3 "if" conditions to check entries for each of the 3 subgrids in rows 0,3,6,
 	          
-	        	result4 = false;
+	        	result = false;
 	        }
-	        if(uniqueEntries(flatten(subGrid(b,3,3*w,3)))==false){
+	        if(uniqueEntries(flatten(subGrid(grid,3,3*w,3)))==false){
 	          
-	        	result4 = false;
+	        	result = false;
 	        }
-	        if(uniqueEntries(flatten(subGrid(b,6,3*w,3)))==false){
+	        if(uniqueEntries(flatten(subGrid(grid,6,3*w,3)))==false){
 	          
-	        	result4 = false;
+	        	result = false;
 	        }
 	      }
-	     return result4;
+	     return result;
 	    }      
 	    
-	    public static boolean isValid(int[][] b){
+	    public static boolean isValid(int[][] grid){
 	    boolean result = true;
 	    
-	    for(int i=0;i<b.length;i++){
-	      for(int j=0;j<b[0].length;j++){
-	        if(b[i][j]>9){
+	    for(int i=0;i<grid.length;i++){
+	      for(int j=0;j<grid[0].length;j++){
+	        if(grid[i][j]>9){
 	          result = false;
 	        }
 	      }
 	    }
 	    return result;
 	  }
-	    
-	  public static int[] sort(int[] a){  // two for loops used so we can perform all possible comparisons of elements at different indices.
+	  // two for loops used so we can perform all possible comparisons of elements at different indices.
+	  public static int[] sort(int[] array){  
 	    
 	    int[] b = new int[9];
-	    for(int i =0;i<a.length;i++){
-	      b[i] = a[i];
+	    for(int i =0;i<array.length;i++){
+	      b[i] = array[i];
 	    }
 	    for(int i=0; i<b.length;i++){
 	      for(int j =i+1; j<b.length;j++){
@@ -131,9 +131,9 @@ public class Sudoku {
 	    return b;   
 	  }
 	  // takes an array of integers and checks if all entries are unique.
-	  public static boolean uniqueEntries(int[] a){
+	  public static boolean uniqueEntries(int[] array){
 	    
-	    int[] sorted = sort(a);
+	    int[] sorted = sort(array);
 	    boolean b = true;    
 	    for(int i= 0; i<sorted.length;i++){
 	      for(int j=i+1; j<sorted.length;j++){
@@ -146,13 +146,13 @@ public class Sudoku {
 	   return b;
 	  }
 	  // takes a 2d array representing the grid and returns the specified column from the grid. 
-	  public static int[] getColumn(int[][] grid, int i){
+	  public static int[] getColumn(int[][] grid, int column){
 	    
 	    int a = 0;
 	    int[] column = new int[9];
 	    for(int row = 0; row<grid.length;row++){
 	      
-	      column[a] = grid[row][i];
+	      column[a] = grid[row][column];
 	      a++;
 	    }
 	    return column; 
